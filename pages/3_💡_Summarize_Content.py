@@ -30,6 +30,11 @@ def main():
     if prompt:
         handle_user_input(prompt)
 
+    with st.sidebar:
+        logo_html = open('logo.html')
+        st.write(logo_html.read(), unsafe_allow_html=True)
+        logo_html.close()
+
 
 if __name__ == "__main__":
     main()

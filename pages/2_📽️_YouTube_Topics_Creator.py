@@ -23,17 +23,20 @@ def main():
     st.session_state.video_subject = None
     st.session_state.video_topics = None
 
-    if st.session_state.video_subject and st.session_state.video_topics:
-        st.title(f"Topics for {st.session_state.video_subject}")
-        st.write(st.session_state.video_topics)
+    #  Add title and subtitle
+    st.title(":orange[bit AI] 🤖")
+    st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, CodeLLaMa and Streamlit 🎈")
 
-    st.title("📽️ YouTube Video Topics Creator 🤖")
-    st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, Replicate and Streamlit 🎈")
-    st.caption("You can create topics for your YouTube videos using this tool.")
+    st.subheader("Create Topics and Titles")
 
     prompt = st.chat_input("✏️ Enter video subject here you want to create topics for: ")
     if prompt:
         handle_user_input(prompt)
+
+    with st.sidebar:
+        logo_html = open('logo.html')
+        st.write(logo_html.read(), unsafe_allow_html=True)
+        logo_html.close()
 
 
 if __name__ == "__main__":

@@ -34,8 +34,6 @@ def handle_user_input(prompt):
     Add the user input to the memory
     Add the AI response to the memory
     """
-    with st.sidebar:
-        add_logo("https://github.com/volkantasci/bitai/blob/master/bitpython-logo.png?raw=true", 200)
 
     #  Add user input to memory
     st.session_state.chat_interface_memory.chat_memory.add_user_message(prompt)
@@ -59,17 +57,28 @@ def main():
 
     # set page config
     st.set_page_config(
-        page_title="PisiMan 😼 - The Powwer of AI 🤖",
+        page_title="bitAI 🤖 Chat With Your Favorite Model 💬",
         page_icon="🤖",
         initial_sidebar_state="expanded",
     )
 
     #  Add title and subtitle
-    st.title("PisiMan 😼 - The Powwer of AI 🤖")
-    st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, Replicate and Streamlit 🎈")
+    st.title(":orange[bit AI] 🤖")
+    st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, CodeLLaMa and Streamlit 🎈")
 
-    #  List models we can use
-    st.session_state.chat_model = st.selectbox("Select a model to use Chat:", MODELS)
+    st.subheader("Chat with Text Generation Models")
+
+    with st.container():
+        col1, col2 = st.columns(2)
+        with col1:
+            #  List models we can use
+            st.session_state.chat_model = st.selectbox("Select a model to use Chat:", MODELS)
+
+        with col2:
+            st.write('<div style="height: 27px"></div>', unsafe_allow_html=True)
+            clear_button = st.button("🗑️ Clear chat history")
+            if clear_button:
+                st.session_state.chat_interface_memory.clear()
 
     #  Set initial variables
     if "chat_model" not in st.session_state:
@@ -80,17 +89,17 @@ def main():
         st.session_state.user_input = prompt
         handle_user_input(prompt)
 
-    with st.sidebar:
-        clear_button = st.button("Clear chat history")
-        if clear_button:
-            st.session_state.chat_interface_memory.clear()
-
-    #  Display chat history
+        #  Display chat history
     for message in st.session_state.chat_interface_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
             st.write(f"👤 {message.content}")
         elif isinstance(message, AIMessage):
             st.write(f"🤖 {message.content}")
+
+    with st.sidebar:
+        logo_html = open('logo.html')
+        st.write(logo_html.read(), unsafe_allow_html=True)
+        logo_html.close()
 
 
 if __name__ == "__main__":
