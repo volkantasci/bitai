@@ -20,8 +20,11 @@ API_URLS = {
 }
 
 #  Create a memory object and add it to the session state
-if "memory" not in st.session_state:
-    st.session_state.memory = ConversationBufferMemory()
+if "chat_interface_memory" not in st.session_state:
+    st.session_state.chat_interface_memory = ConversationBufferMemory(memory_key="chat_history")
+
+if "chat_model" not in st.session_state:
+    st.session_state.chat_model = "OpenAI GPT-3.5-Turbo"
 
 
 def handle_user_input(prompt):
@@ -32,8 +35,8 @@ def handle_user_input(prompt):
     """
 
     #  Add user input to memory
-    st.session_state.memory.chat_memory.add_user_message(prompt)
-    selected_api_url = API_URLS[st.session_state.model]
+    st.session_state.chat_interface_memory.chat_memory.add_user_message(prompt)
+    selected_api_url = API_URLS[st.session_state.chat_model]
 
     def query(payload):
         response = requests.post(selected_api_url, json=payload)
@@ -41,17 +44,13 @@ def handle_user_input(prompt):
 
     with st.spinner("Chatting with AI..."):
         output = query({
-            "question": st.session_state.memory.buffer_as_str,
+            "question": st.session_state.chat_interface_memory.buffer_as_str,
         })
 
-        st.session_state.memory.chat_memory.add_message(AIMessage(content=output))
+        st.session_state.chat_interface_memory.chat_memory.add_message(AIMessage(content=output))
 
 
 def main():
-    #  Set initial variables
-    if "model" not in st.session_state:
-        st.session_state.model = "GPT-3.5-Turbo"
-
     if "user_input" not in st.session_state:
         st.session_state.user_input = None
 
@@ -67,7 +66,12 @@ def main():
     st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, Replicate and Streamlit 🎈")
 
     #  List models we can use
-    st.session_state.model = st.selectbox("Select a model to use Chat:", MODELS)
+    st.session_state.chat_model = st.selectbox("Select a model to use Chat:", MODELS)
+
+    #  Set initial variables
+    if "chat_model" not in st.session_state:
+        st.session_state.chat_model = "GPT-3.5-Turbo"
+
     prompt = st.chat_input("✏️ Enter your message here: ")
     if prompt:
         st.session_state.user_input = prompt
@@ -76,10 +80,10 @@ def main():
     with st.sidebar:
         clear_button = st.button("Clear chat history")
         if clear_button:
-            st.session_state.memory.clear()
+            st.session_state.chat_interface_memory.clear()
 
     #  Display chat history
-    for message in st.session_state.memory.buffer_as_messages:
+    for message in st.session_state.chat_interface_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
             st.write(f"👤 {message.content}")
         elif isinstance(message, AIMessage):

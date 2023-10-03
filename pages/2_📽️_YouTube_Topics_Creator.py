@@ -27,8 +27,9 @@ def main():
         st.title(f"Topics for {st.session_state.video_subject}")
         st.write(st.session_state.video_topics)
 
-    st.title("YouTube Video Topics Creator")
-    st.caption("You can create topics for your YouTube videos using this tool 🤖")
+    st.title("📽️ YouTube Video Topics Creator 🤖")
+    st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, Replicate and Streamlit 🎈")
+    st.caption("You can create topics for your YouTube videos using this tool.")
 
     prompt = st.chat_input("✏️ Enter video subject here you want to create topics for: ")
     if prompt:
