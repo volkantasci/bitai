@@ -90,10 +90,7 @@ def main():
         elif isinstance(message, AIMessage):
             st.write(f"🤖 {message.content}")
 
-    with st.sidebar:
-        logo_html = open('logo.html')
-        st.write(logo_html.read(), unsafe_allow_html=True)
-        logo_html.close()
+    st.sidebar.image("bitpython-logo.png")
 
 
 if __name__ == "__main__":

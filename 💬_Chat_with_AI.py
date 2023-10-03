@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 from langchain.schema.messages import AIMessage, HumanMessage
 from langchain.memory import ConversationBufferMemory
-from streamlit_extras.app_logo import add_logo
 
 API_HOST = "http://localhost:3000"
 
@@ -96,10 +95,7 @@ def main():
         elif isinstance(message, AIMessage):
             st.write(f"🤖 {message.content}")
 
-    with st.sidebar:
-        logo_html = open('logo.html')
-        st.write(logo_html.read(), unsafe_allow_html=True)
-        logo_html.close()
+    st.sidebar.image("bitpython-logo.png")
 
 
 if __name__ == "__main__":
