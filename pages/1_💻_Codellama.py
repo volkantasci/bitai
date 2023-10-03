@@ -36,7 +36,7 @@ def handle_user_input(prompt):
     st.session_state.codellama_interface_memory.chat_memory.add_message(HumanMessage(content=prompt))
 
     def query(payload):
-        selected_api_url = API_URLS[st.session_state.model]
+        selected_api_url = API_URLS[st.session_state.codellama_model]
         response = requests.post(selected_api_url, json=payload)
         return response.json()
 
