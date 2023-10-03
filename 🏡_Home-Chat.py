@@ -35,7 +35,7 @@ def handle_user_input(prompt):
     Add the AI response to the memory
     """
     with st.sidebar:
-        add_logo("./bitpython-logo.png", 200)
+        add_logo("https://github.com/volkantasci/bitai/blob/master/bitpython-logo.png?raw=true", 200)
 
     #  Add user input to memory
     st.session_state.chat_interface_memory.chat_memory.add_user_message(prompt)
