@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from langchain.schema.messages import AIMessage, HumanMessage
 from langchain.memory import ConversationBufferMemory
+from streamlit_extras.app_logo import add_logo
 
 API_HOST = "http://localhost:3000"
 
@@ -33,6 +34,8 @@ def handle_user_input(prompt):
     Add the user input to the memory
     Add the AI response to the memory
     """
+    with st.sidebar:
+        add_logo("./bitpython-logo.png", 200)
 
     #  Add user input to memory
     st.session_state.chat_interface_memory.chat_memory.add_user_message(prompt)
