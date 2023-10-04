@@ -53,6 +53,12 @@ def main():
             st.session_state.youtube_selected_model = st.selectbox("Select model to use:",
                                                                    st.session_state.youtube_models)
 
+        with col2:
+            st.write('<div style="height: 27px"></div>', unsafe_allow_html=True)
+            clear_button = st.button("🗑️ Clear history")
+            if clear_button:
+                st.session_state.youtube_memory.clear()
+
     prompt = st.chat_input("✏️ Enter video subject here you want to create topics for: ")
     if prompt:
         handle_user_input(prompt)
@@ -61,9 +67,9 @@ def main():
 
     for message in st.session_state.youtube_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
-            st.write(f"👤 {message.content}")
+            st.write(f"👤 Human:\n\n {message.content}")
         elif isinstance(message, AIMessage):
-            st.write(f"🤖 {message.content}")
+            st.write(f"🤖 AI:\n {message.content}")
 
 
 if __name__ == "__main__":

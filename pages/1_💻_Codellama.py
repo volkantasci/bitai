@@ -86,9 +86,9 @@ def main():
     #  Display chat history
     for message in st.session_state.codellama_interface_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
-            st.write(f"👤 {message.content}")
+            st.write(f"👤 Human:\n {message.content}")
         elif isinstance(message, AIMessage):
-            st.write(f"🤖 {message.content}")
+            st.write(f"🤖 AI:\n {message.content}")
 
     st.sidebar.image("bitpython-logo.png")
 

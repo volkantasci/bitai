@@ -23,8 +23,11 @@ def main():
     st.session_state.user_input = None
     st.session_state.summarized_text = None
 
-    st.title("Summarize Your Content")
-    st.caption("You can summarize your content using this tool 🤖")
+    #  Add title and subtitle
+    st.title(":orange[bit AI] 🤖")
+    st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, CodeLLaMa and Streamlit 🎈")
+
+    st.subheader("Summarize Your Content With AI")
 
     prompt = st.chat_input("✏️ Enter your content here you want to summarize for: ")
     if prompt:
