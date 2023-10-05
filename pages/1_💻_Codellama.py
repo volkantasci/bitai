@@ -9,15 +9,21 @@ API_HOST = "http://localhost:3000"
 #  List of models we can use
 MODELS = [
     "Meta AI - Codellama 34b Instruct",
+    "Meta AI - Codellama 34b Python",
     "Meta AI - Codellama 13b Instruct",
+    "Meta AI - Codellama 13b Python",
     "Meta AI - Codellama 7b Instruct"
+    "Meta AI - Codellama 7b Python"
 ]
 
 #  List of API URLs for each model
 API_URLS = {
     "Meta AI - Codellama 34b Instruct": API_HOST + "/api/v1/prediction/2c13186c-affc-4837-9dee-0295f27d6cff",
+    "Meta AI - Codellama 34b Python": API_HOST + "/api/v1/prediction/75f3c668-1261-4216-aaa8-2176ccb2ff6a",
     "Meta AI - Codellama 13b Instruct": API_HOST + "/api/v1/prediction/8bd8c170-9baf-4769-9fb2-2a748749b2b2",
-    "Meta AI - Codellama 7b Instruct": API_HOST + "/api/v1/prediction/a5a3b276-5e13-4789-9fce-b9cc64d10401"
+    "Meta AI - Codellama 13b Python": API_HOST + "/api/v1/prediction/d5cb84d9-9bf0-449a-a1ba-c916877f472c",
+    "Meta AI - Codellama 7b Instruct": API_HOST + "/api/v1/prediction/a5a3b276-5e13-4789-9fce-b9cc64d10401",
+    "Meta AI - Codellama 7b Python": API_HOST + "/api/v1/prediction/5f50d315-1d0f-425c-8776-62bf0a06fad6"
 }
 
 #  Create a memory object and add it to the session state
