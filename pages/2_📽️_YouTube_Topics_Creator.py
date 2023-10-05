@@ -3,6 +3,8 @@ import requests
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import HumanMessage, AIMessage
 
+from respond_beauty import make_it_beautiful
+
 API_HOST = "http://localhost:3000"
 
 API_URLS = {
@@ -67,9 +69,15 @@ def main():
 
     for message in st.session_state.youtube_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
-            st.write(f"👤 Human:\n\n {message.content}")
+            with open("user_message_template.html") as user_message_template:
+                new_content = make_it_beautiful(message.content)
+                html = user_message_template.read()
+                st.write(html.format(new_content), unsafe_allow_html=True)
         elif isinstance(message, AIMessage):
-            st.write(f"🤖 AI:\n {message.content}")
+            with open("ai_message_template.html") as ai_message_template:
+                new_content = make_it_beautiful(message.content)
+                html = ai_message_template.read()
+                st.write(html.format(new_content), unsafe_allow_html=True)
 
 
 if __name__ == "__main__":

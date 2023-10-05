@@ -3,20 +3,22 @@ import requests
 from langchain.schema.messages import AIMessage, HumanMessage
 from langchain.memory import ConversationBufferMemory
 
+from respond_beauty import make_it_beautiful
+
 API_HOST = "http://localhost:3000"
 
 #  List of models we can use
 MODELS = [
     "OpenAI GPT-4",
     "OpenAI GPT-3.5-Turbo",
-    "Meta AI LLaMa-2 70B"
+    "Meta AI LLaMa 2 - 70b"
 ]
 
 #  List of API URLs for each model
 API_URLS = {
     "OpenAI GPT-4": API_HOST + "/api/v1/prediction/4fb38d2e-1341-4e79-81f6-5d20f7f36a6a",
     "OpenAI GPT-3.5-Turbo": API_HOST + "/api/v1/prediction/5668868a-b59a-4aaf-98eb-bf31e0058d81",
-    "Meta AI LLaMa-2 70B": API_HOST + "/api/v1/prediction/c16c790d-227c-4919-9925-06988c2115a7"
+    "Meta AI LLaMa 2 - 70b": API_HOST + "/api/v1/prediction/c16c790d-227c-4919-9925-06988c2115a7"
 }
 
 #  Create a memory object and add it to the session state
@@ -91,9 +93,15 @@ def main():
         #  Display chat history
     for message in st.session_state.chat_interface_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
-            st.write(f"👤 Human:\n {message.content}")
+            with open("user_message_template.html") as user_message_template:
+                new_content = make_it_beautiful(message.content)
+                html = user_message_template.read()
+                st.write(html.format(new_content), unsafe_allow_html=True)
         elif isinstance(message, AIMessage):
-            st.write(f"🤖 AI:\n {message.content}")
+            with open("ai_message_template.html") as ai_message_template:
+                new_content = make_it_beautiful(message.content)
+                html = ai_message_template.read()
+                st.write(html.format(new_content), unsafe_allow_html=True)
 
     st.sidebar.image("bitpython-logo.png")
 

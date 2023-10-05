@@ -2,21 +2,22 @@ import streamlit as st
 import requests
 from langchain.schema.messages import AIMessage, HumanMessage
 from langchain.memory import ConversationBufferMemory
+from respond_beauty import make_it_beautiful
 
 API_HOST = "http://localhost:3000"
 
 #  List of models we can use
 MODELS = [
-    "Meta AI - Codellama 34b",
-    "Meta AI - Codellama 13b",
-    "Meta AI - Codellama 7b"
+    "Meta AI - Codellama 34b Instruct",
+    "Meta AI - Codellama 13b Instruct",
+    "Meta AI - Codellama 7b Instruct"
 ]
 
 #  List of API URLs for each model
 API_URLS = {
-    "Meta AI - Codellama 34b": API_HOST + "/api/v1/prediction/2c13186c-affc-4837-9dee-0295f27d6cff",
-    "Meta AI - Codellama 13b": API_HOST + "/api/v1/prediction/8bd8c170-9baf-4769-9fb2-2a748749b2b2",
-    "Meta AI - Codellama 7b": API_HOST + "/api/v1/prediction/a5a3b276-5e13-4789-9fce-b9cc64d10401"
+    "Meta AI - Codellama 34b Instruct": API_HOST + "/api/v1/prediction/2c13186c-affc-4837-9dee-0295f27d6cff",
+    "Meta AI - Codellama 13b Instruct": API_HOST + "/api/v1/prediction/8bd8c170-9baf-4769-9fb2-2a748749b2b2",
+    "Meta AI - Codellama 7b Instruct": API_HOST + "/api/v1/prediction/a5a3b276-5e13-4789-9fce-b9cc64d10401"
 }
 
 #  Create a memory object and add it to the session state
@@ -51,7 +52,7 @@ def handle_user_input(prompt):
 def main():
     # set page config
     st.set_page_config(
-        page_title="PisiMan 😼 - Codellama 🤖",
+        page_title="Codellama Models Fine Tuned for Python 🤖",
         page_icon="🤖",
         initial_sidebar_state="expanded",
     )
@@ -76,7 +77,7 @@ def main():
 
     #  Set initial variables
     if "codellama_model" not in st.session_state:
-        st.session_state.codellama_model = "Meta AI - Codellama 34b"
+        st.session_state.codellama_model = "Meta AI - Codellama 34b Instruct"
 
     prompt = st.chat_input("✏️ Enter your message here: ")
     if prompt:
@@ -86,9 +87,15 @@ def main():
     #  Display chat history
     for message in st.session_state.codellama_interface_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
-            st.write(f"👤 Human:\n {message.content}")
+            with open("user_message_template.html") as user_message_template:
+                new_content = make_it_beautiful(message.content)
+                html = user_message_template.read()
+                st.write(html.format(new_content), unsafe_allow_html=True)
         elif isinstance(message, AIMessage):
-            st.write(f"🤖 AI:\n {message.content}")
+            with open("ai_message_template.html") as ai_message_template:
+                new_content = make_it_beautiful(message.content)
+                html = ai_message_template.read()
+                st.write(html.format(new_content), unsafe_allow_html=True)
 
     st.sidebar.image("bitpython-logo.png")
 
