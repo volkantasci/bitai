@@ -1,4 +1,4 @@
-# <Your Project Name>
+# bitAI 🤖
 
 This project is a Streamlit application that is designed to implement and interact with various AI models.
 
