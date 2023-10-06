@@ -42,7 +42,10 @@ def main():
 
     #  Add title and subtitle
     st.title(":orange[bit AI] 🤖")
-    st.caption("ℹ️ We are powered by AI tools like OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, CodeLLaMa and Streamlit 🎈")
+    st.caption(
+        "bitAI powered by these AI tools:"
+        "OpenAI GPT-3.5-Turbo 🤖, HuggingFace 🤗, CodeLLaMa 🦙, Replicate and Streamlit of course."
+    )
 
     st.subheader("Summarize Your Content With AI")
 
@@ -54,28 +57,47 @@ def main():
 
         with col2:
             st.write('<div style="height: 27px"></div>', unsafe_allow_html=True)
-            clear_button = st.button("🗑️ Clear history")
-            if clear_button:
-                st.session_state.summarize_interface_memory.clear()
+            second_col1, second_col2 = st.columns([2, 1])
+            with second_col1:
+                clear_button = st.button("🗑️ Clear history", use_container_width=True)
+                if clear_button:
+                    st.session_state.summarize_interface_memory.clear()
+
+            with second_col2:
+                beauty = st.toggle("HTML?")
+                if beauty:
+                    st.session_state.summarize_interface_html = True
+                else:
+                    st.session_state.summarize_interface_html = False
 
     prompt = st.chat_input("✏️ Enter your content here you want to summarize for: ")
     if prompt:
         handle_user_input(prompt)
 
     st.sidebar.image("bitpython-logo.png")
+    st.sidebar.caption('<p style="text-align: center;">Made by volkantasci</p>', unsafe_allow_html=True)
 
     #  Display chat history
     for message in st.session_state.summarize_interface_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
-            with open("user_message_template.html") as user_message_template:
-                new_content = make_it_beautiful(message.content)
-                html = user_message_template.read()
-                st.write(html.format(new_content), unsafe_allow_html=True)
+            if st.session_state.summarize_interface_html:
+                with open("user_message_template.html") as user_message_template:
+                    new_content = make_it_beautiful(message.content)
+                    html = user_message_template.read()
+                    st.write(html.format(new_content), unsafe_allow_html=True)
+
+            else:
+                st.write("🤗 Human: ", message.content)
+
         elif isinstance(message, AIMessage):
-            with open("ai_message_template.html") as ai_message_template:
-                new_content = make_it_beautiful(message.content)
-                html = ai_message_template.read()
-                st.write(html.format(new_content), unsafe_allow_html=True)
+            if st.session_state.summarize_interface_html:
+                with open("ai_message_template.html") as ai_message_template:
+                    new_content = make_it_beautiful(message.content)
+                    html = ai_message_template.read()
+                    st.write(html.format(new_content), unsafe_allow_html=True)
+
+            else:
+                st.write("🤖 AI: ", message.content)
 
 
 if __name__ == "__main__":
