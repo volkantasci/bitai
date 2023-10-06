@@ -4,3 +4,8 @@ streamlit
 requests
 streamlit-extras
 watchdog
+python-dotenv
+pypdf2
+InstructorEmbedding
+sentence-transformers
+huggingface-hub

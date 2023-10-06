@@ -20,7 +20,7 @@ if "summarize_model" not in st.session_state:
     st.session_state.summarize_model = "ChatGPT-4"
 
 if "summarize_interface_html" not in st.session_state:
-    st.session_state.summarize_interface_html = True
+    st.session_state.summarize_interface_html = False
 
 
 def handle_user_input(prompt):
@@ -67,37 +67,36 @@ def main():
                     st.session_state.summarize_interface_memory.clear()
 
             with second_col2:
-                st.session_state.summarize_interface_html = st.toggle("HTML?",
-                                                                      value=st.session_state.summarize_interface_html)
+                st.session_state.summarize_interface_html = st.toggle("HTML", value=False)
 
     prompt = st.chat_input("✏️ Enter your content here you want to summarize for: ")
     if prompt:
         handle_user_input(prompt)
 
-    st.sidebar.image("bitpython-logo.png")
+    st.sidebar.image("assests/bitpython-logo.png")
     st.sidebar.caption('<p style="text-align: center;">Made by volkantasci</p>', unsafe_allow_html=True)
 
     #  Display chat history
     for message in st.session_state.summarize_interface_memory.buffer_as_messages:
         if isinstance(message, HumanMessage):
             if st.session_state.summarize_interface_html:
-                with open("user_message_template.html") as user_message_template:
+                with open("templates/user_message_template.html") as user_message_template:
                     new_content = make_it_beautiful(message.content)
                     html = user_message_template.read()
                     st.write(html.format(new_content), unsafe_allow_html=True)
 
             else:
-                st.write("🤗 Human: ", message.content)
+                st.chat_message("Human", avatar="🤗").write(message.content)
 
         elif isinstance(message, AIMessage):
             if st.session_state.summarize_interface_html:
-                with open("ai_message_template.html") as ai_message_template:
+                with open("templates/ai_message_template.html") as ai_message_template:
                     new_content = make_it_beautiful(message.content)
                     html = ai_message_template.read()
                     st.write(html.format(new_content), unsafe_allow_html=True)
 
             else:
-                st.write("🤖 AI: ", message.content)
+                st.chat_message("AI", avatar="🤖").write(message.content)
 
 
 if __name__ == "__main__":
