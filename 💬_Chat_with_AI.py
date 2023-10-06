@@ -28,6 +28,9 @@ if "chat_interface_memory" not in st.session_state:
 if "chat_model" not in st.session_state:
     st.session_state.chat_model = "OpenAI GPT-3.5-Turbo"
 
+if "chat_interface_html" not in st.session_state:
+    st.session_state.chat_interface_html = True
+
 
 def handle_user_input(prompt):
     """
@@ -86,11 +89,7 @@ def main():
                     st.session_state.chat_interface_memory.clear()
 
             with second_col2:
-                beauty = st.toggle("HTML?")
-                if beauty:
-                    st.session_state.chat_interface_html = True
-                else:
-                    st.session_state.chat_interface_html = False
+                st.session_state.chat_interface_html = st.toggle("HTML?", value=st.session_state.chat_interface_html)
 
     #  Set initial variables
     if "chat_model" not in st.session_state:

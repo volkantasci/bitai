@@ -19,6 +19,9 @@ if "summarize_interface_memory" not in st.session_state:
 if "summarize_model" not in st.session_state:
     st.session_state.summarize_model = "ChatGPT-4"
 
+if "summarize_interface_html" not in st.session_state:
+    st.session_state.summarize_interface_html = True
+
 
 def handle_user_input(prompt):
     st.session_state.summarize_interface_memory.chat_memory.add_user_message(prompt)
@@ -64,11 +67,8 @@ def main():
                     st.session_state.summarize_interface_memory.clear()
 
             with second_col2:
-                beauty = st.toggle("HTML?")
-                if beauty:
-                    st.session_state.summarize_interface_html = True
-                else:
-                    st.session_state.summarize_interface_html = False
+                st.session_state.summarize_interface_html = st.toggle("HTML?",
+                                                                      value=st.session_state.summarize_interface_html)
 
     prompt = st.chat_input("✏️ Enter your content here you want to summarize for: ")
     if prompt:

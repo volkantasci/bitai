@@ -16,6 +16,9 @@ API_URLS = {
 if "youtube_memory" not in st.session_state:
     st.session_state.youtube_memory = ConversationBufferMemory()
 
+if "youtube_interface_html" not in st.session_state:
+    st.session_state.youtube_interface_html = True
+
 
 def handle_user_input(prompt):
     def query(payload):
@@ -66,11 +69,8 @@ def main():
                     st.session_state.youtube_memory.clear()
 
             with second_col2:
-                beauty = st.toggle("HTML?")
-                if beauty:
-                    st.session_state.youtube_interface_html = True
-                else:
-                    st.session_state.youtube_interface_html = False
+                st.session_state.youtube_interface_html = st.toggle("HTML?",
+                                                                    value=st.session_state.youtube_interface_html)
 
     prompt = st.chat_input("✏️ Enter video subject here you want to create topics for: ")
     if prompt:

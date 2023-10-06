@@ -37,6 +37,9 @@ if "codellama_interface_memory" not in st.session_state:
 if "codellama_model" not in st.session_state:
     st.session_state.codellama_model = "Meta AI - Codellama 34b"
 
+if "codellama_interface_html" not in st.session_state:
+    st.session_state.codellama_interface_html = True
+
 
 def handle_user_input(prompt):
     """
@@ -90,11 +93,8 @@ def main():
                     st.session_state.codellama_interface_memory.clear()
 
             with second_col2:
-                beauty = st.toggle("HTML?")
-                if beauty:
-                    st.session_state.codellama_interface_html = True
-                else:
-                    st.session_state.codellama_interface_html = False
+                st.session_state.codellama_interface_html = st.toggle("HTML?",
+                                                                      value=st.session_state.codellama_interface_html)
 
     #  Set initial variables
     if "codellama_model" not in st.session_state:
