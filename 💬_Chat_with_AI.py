@@ -2,12 +2,8 @@ import streamlit as st
 import requests
 from langchain.schema.messages import AIMessage, HumanMessage
 from langchain.memory import ConversationBufferMemory
-from os import environ
-
+from api_config import API_HOST, API_PORT
 from respond_beauty import make_it_beautiful
-
-API_HOST = 'http://' + environ.get("API_HOST", "")
-API_PORT = environ.get("API_PORT", "3000")
 
 #  List of models we can use
 MODELS = [

@@ -4,16 +4,25 @@ This project is a Streamlit application that is designed to implement and intera
 
 ## Models used
 
-- `OpenAI ChatGPT-4`: This is an improved version of ChatGPT that can generate more human-like text. It's generally used for various tasks that involve natural language generation.
-- `OpenAI ChatGPT-3.5-Turbo`: This model from OpenAI is designed to offer better performance than its predecessors at a lower cost. It's capable of generating contextually relevant, human-like text.
-- `Meta AI Llama 2 - 70B Chat`: This model is a conversational AI developed by Meta. It can understand and generate human-like text, making it suitable for building interactive applications like chatbots.
-- `Meta AI CodeLLaMA 🦙 34B Instruct`: This is a Meta AI model trained on coding-related tasks. It understands programming instructions and can generate relevant code snippets.
-- `Meta AI CodeLLaMA 🦙 34B Fine Tuned for Python`: This model is similar to the 34B Instruct model but is specifically fine-tuned for generating Python code.
-- `Meta AI CodeLLaMA 🦙 13B Instruct`: This is another version of Meta's CodeLLaMA model with reduced parameter count. It can still understand programming instructions and generate relevant code.
-- `Meta AI CodeLLaMA 🦙 13B Fine Tuned for Python`: This version of the CodeLLaMA model is specifically fine-tuned to understand and generate Python code.
-- `Meta AI CodeLLaMA 🦙 7B Instruct`: This is a smaller version of the CodeLLaMA model designed by Meta. It's capable of understanding programming instructions and generating relevant code.
-- `Meta AI CodeLLaMA 🦙 7B Fine Tuned for Python`: Another version of Meta's CodeLLaMA model specifically fine-tuned to generate Python code.
-...
+- `OpenAI ChatGPT-4`: This is an improved version of ChatGPT that can generate more human-like text. It's generally used
+  for various tasks that involve natural language generation.
+- `OpenAI ChatGPT-3.5-Turbo`: This model from OpenAI is designed to offer better performance than its predecessors at a
+  lower cost. It's capable of generating contextually relevant, human-like text.
+- `Meta AI Llama 2 - 70B Chat`: This model is a conversational AI developed by Meta. It can understand and generate
+  human-like text, making it suitable for building interactive applications like chatbots.
+- `Meta AI CodeLLaMA 🦙 34B Instruct`: This is a Meta AI model trained on coding-related tasks. It understands
+  programming instructions and can generate relevant code snippets.
+- `Meta AI CodeLLaMA 🦙 34B Fine Tuned for Python`: This model is similar to the 34B Instruct model but is specifically
+  fine-tuned for generating Python code.
+- `Meta AI CodeLLaMA 🦙 13B Instruct`: This is another version of Meta's CodeLLaMA model with reduced parameter count. It
+  can still understand programming instructions and generate relevant code.
+- `Meta AI CodeLLaMA 🦙 13B Fine Tuned for Python`: This version of the CodeLLaMA model is specifically fine-tuned to
+  understand and generate Python code.
+- `Meta AI CodeLLaMA 🦙 7B Instruct`: This is a smaller version of the CodeLLaMA model designed by Meta. It's capable of
+  understanding programming instructions and generating relevant code.
+- `Meta AI CodeLLaMA 🦙 7B Fine Tuned for Python`: Another version of Meta's CodeLLaMA model specifically fine-tuned to
+  generate Python code.
+  ...
 
 ## Tools and Libraries Used
 
@@ -34,6 +43,12 @@ To install this application, follow these steps:
 2. (Optional) Create a Python virtual environment and activate it.
 
 3. Install the necessary packages using the command `pip install -r requirements.txt`
+
+4. Run a docker container with flowise-compose.yml file. Load DB.json database file to FlowsieAI with its own UI.
+
+5. Add your API keys to FlowiseAI in UI.
+
+6. Make sure your OPENAI_API_KEY is set in your environment variables.
 
 ## How to run the application
 

@@ -3,10 +3,7 @@ import requests
 from langchain.schema.messages import AIMessage, HumanMessage
 from langchain.memory import ConversationBufferMemory
 from respond_beauty import make_it_beautiful
-from os import environ
-
-API_HOST = 'http://' + environ.get("API_HOST", "")
-API_PORT = environ.get("API_PORT", "3000")
+from api_config import API_HOST, API_PORT
 
 #  List of models we can use
 MODELS = [

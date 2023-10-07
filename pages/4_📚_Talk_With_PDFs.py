@@ -8,7 +8,6 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.schema.messages import HumanMessage, AIMessage, SystemMessage
 from langchain.chat_models import ChatOpenAI
-from os import environ
 
 if "conversational_retriever_chain" not in st.session_state:
     st.session_state.conversational_retriever_chain = None

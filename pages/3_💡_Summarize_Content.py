@@ -2,12 +2,10 @@ import streamlit as st
 import requests
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import HumanMessage, AIMessage
-
+from api_config import API_HOST, API_PORT
 from respond_beauty import make_it_beautiful
-from os import environ
 
-API_HOST = 'http://' + environ.get("API_HOST", "")
-API_PORT = environ.get("API_PORT", "3000")
+
 
 API_URLS = {
     "ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/bce8e1fd-cb78-4068-9822-d386d914068a"
