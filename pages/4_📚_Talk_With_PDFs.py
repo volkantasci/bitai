@@ -2,7 +2,6 @@ import streamlit as st
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from PyPDF2 import PdfReader
 from langchain.vectorstores import FAISS
-from dotenv import load_dotenv
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
@@ -23,8 +22,6 @@ if "translator" not in st.session_state:
 
 if "talk_with_pdfs_files" not in st.session_state:
     st.session_state.talk_with_pdfs_files = None
-
-load_dotenv()
 
 
 def read_pdfs(files):

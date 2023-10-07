@@ -5,8 +5,6 @@ from langchain.schema import HumanMessage, AIMessage
 from api_config import API_HOST, API_PORT
 from respond_beauty import make_it_beautiful
 
-
-
 API_URLS = {
     "ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/bce8e1fd-cb78-4068-9822-d386d914068a"
 }

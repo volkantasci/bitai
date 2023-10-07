@@ -39,10 +39,10 @@ def handle_user_input(prompt):
 
     #  Add user input to memory
     st.session_state.chat_interface_memory.chat_memory.add_user_message(prompt)
-    selected_api_url = API_URLS[st.session_state.chat_model]
 
     def query(payload):
-        response = requests.post(selected_api_url, json=payload)
+        print(payload)
+        response = requests.post(API_URLS[st.session_state.chat_model], json=payload)
         return response.json()
 
     with st.spinner("Chatting with AI..."):
