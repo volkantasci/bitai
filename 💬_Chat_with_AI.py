@@ -6,7 +6,8 @@ from os import environ
 
 from respond_beauty import make_it_beautiful
 
-API_HOST = environ.get("API_HOST", "")
+API_HOST = 'http://' + environ.get("API_HOST", "")
+API_PORT = environ.get("API_PORT", "3000")
 
 #  List of models we can use
 MODELS = [

@@ -27,6 +27,7 @@ services:
     restart: always
     environment:
       - API_HOST=bitai-flowise
+      - API_PORT=${PORT}
 
     ports:
       - '8501:8501'

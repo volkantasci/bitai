@@ -6,7 +6,8 @@ from langchain.schema import HumanMessage, AIMessage
 from respond_beauty import make_it_beautiful
 from os import environ
 
-API_HOST = environ.get("API_HOST", "")
+API_HOST = 'http://' + environ.get("API_HOST", "")
+API_PORT = environ.get("API_PORT", "3000")
 
 API_URLS = {
     "ChatGPT-4": API_HOST + "/api/v1/prediction/bce8e1fd-cb78-4068-9822-d386d914068a"
