@@ -28,6 +28,7 @@ services:
     environment:
       - API_HOST=bitai-flowise
       - API_PORT=${PORT}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
 
     ports:
       - '8501:8501'
