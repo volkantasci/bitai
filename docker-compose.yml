@@ -2,7 +2,7 @@ version: "3"
 
 services:
   bitai-flowise:
-    image: volkantasci/bitai-flowise:latest
+    image: flowiseai/flowise:latest
     restart: always
     environment:
       - PORT=${PORT}
