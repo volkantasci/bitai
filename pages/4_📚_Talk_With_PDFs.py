@@ -8,6 +8,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.schema.messages import HumanMessage, AIMessage, SystemMessage
 from langchain.chat_models import ChatOpenAI
+from os import environ
 
 if "conversational_retriever_chain" not in st.session_state:
     st.session_state.conversational_retriever_chain = None
@@ -60,6 +61,7 @@ def get_conversation_chain(vector_store):
     llm = ChatOpenAI(
         model_name="gpt-3.5-turbo",
         temperature=0.7,
+        openai_api_key=environ.get("OPENAI_API_KEY"),
     )
     memory = st.session_state.talk_with_pdfs_memory
     chain = ConversationalRetrievalChain.from_llm(
