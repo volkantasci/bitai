@@ -18,9 +18,9 @@ MODELS = [
 
 #  List of API URLs for each model
 API_URLS = {
-    "OpenAI GPT-4": API_HOST + "/api/v1/prediction/4fb38d2e-1341-4e79-81f6-5d20f7f36a6a",
-    "OpenAI GPT-3.5-Turbo": API_HOST + "/api/v1/prediction/5668868a-b59a-4aaf-98eb-bf31e0058d81",
-    "Meta AI LLaMa 2 - 70b": API_HOST + "/api/v1/prediction/c16c790d-227c-4919-9925-06988c2115a7"
+    "OpenAI GPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/4fb38d2e-1341-4e79-81f6-5d20f7f36a6a",
+    "OpenAI GPT-3.5-Turbo": API_HOST + f":{API_PORT}" + "/api/v1/prediction/5668868a-b59a-4aaf-98eb-bf31e0058d81",
+    "Meta AI LLaMa 2 - 70b": API_HOST + f":{API_PORT}" + "/api/v1/prediction/c16c790d-227c-4919-9925-06988c2115a7"
 }
 
 #  Create a memory object and add it to the session state

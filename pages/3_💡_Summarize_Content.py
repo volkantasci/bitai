@@ -10,7 +10,7 @@ API_HOST = 'http://' + environ.get("API_HOST", "")
 API_PORT = environ.get("API_PORT", "3000")
 
 API_URLS = {
-    "ChatGPT-4": API_HOST + "/api/v1/prediction/bce8e1fd-cb78-4068-9822-d386d914068a"
+    "ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/bce8e1fd-cb78-4068-9822-d386d914068a"
 }
 
 MODELS = [

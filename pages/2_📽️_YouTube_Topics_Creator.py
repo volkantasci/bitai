@@ -11,9 +11,9 @@ API_HOST = 'http://' + environ.get("API_HOST", "")
 API_PORT = environ.get("API_PORT", "3000")
 
 API_URLS = {
-    "OpenAI ChatGPT-4": API_HOST + "/api/v1/prediction/f69140b3-5ed6-4c6b-9f89-0968a6de70ea",
-    "OpenAI GPT-3.5-Turbo Instruct": API_HOST + "/api/v1/prediction/cb680c86-db57-4efc-b367-75f9d531c624",
-    "Meta AI LLaMa 2 - 70b": API_HOST + "/api/v1/prediction/a71bf91f-6250-4cc7-8c65-a783cbf2f5c3"
+    "OpenAI ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/f69140b3-5ed6-4c6b-9f89-0968a6de70ea",
+    "OpenAI GPT-3.5-Turbo Instruct": API_HOST + f":{API_PORT}" + "/api/v1/prediction/cb680c86-db57-4efc-b367-75f9d531c624",
+    "Meta AI LLaMa 2 - 70b": API_HOST + f":{API_PORT}" + "/api/v1/prediction/a71bf91f-6250-4cc7-8c65-a783cbf2f5c3"
 }
 
 if "youtube_memory" not in st.session_state:

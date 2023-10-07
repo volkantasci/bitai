@@ -22,14 +22,14 @@ MODELS = [
 
 #  List of API URLs for each model
 API_URLS = {
-    "Meta AI - Codellama 34b Instruct": API_HOST + "/api/v1/prediction/1f9157b9-3cbe-4bfe-852d-d0747ac0e4ff",
-    "Meta AI - Codellama 34b Python": API_HOST + "/api/v1/prediction/75f3c668-1261-4216-aaa8-2176ccb2ff6a",
-    "Meta AI - Codellama 13b Instruct": API_HOST + "/api/v1/prediction/8bd8c170-9baf-4769-9fb2-2a748749b2b2",
-    "Meta AI - Codellama 13b Python": API_HOST + "/api/v1/prediction/d5cb84d9-9bf0-449a-a1ba-c916877f472c",
-    "Meta AI - Codellama 7b Instruct": API_HOST + "/api/v1/prediction/a5a3b276-5e13-4789-9fce-b9cc64d10401",
-    "Meta AI - Codellama 7b Python": API_HOST + "/api/v1/prediction/5f50d315-1d0f-425c-8776-62bf0a06fad6",
-    "OpenAI GPT-3.5-Turbo Instruct": API_HOST + "/api/v1/prediction/b8cf4ce2-2227-4673-87d9-acbee4fcd8da",
-    "OpenAI davinci-002": API_HOST + "/api/v1/prediction/15ec5490-09bf-4635-8a2e-6b40a3322daa",
+    "Meta AI - Codellama 34b Instruct": API_HOST + f":{API_PORT}" + "/api/v1/prediction/1f9157b9-3cbe-4bfe-852d-d0747ac0e4ff",
+    "Meta AI - Codellama 34b Python": API_HOST + f":{API_PORT}" + "/api/v1/prediction/75f3c668-1261-4216-aaa8-2176ccb2ff6a",
+    "Meta AI - Codellama 13b Instruct": API_HOST + f":{API_PORT}" + "/api/v1/prediction/8bd8c170-9baf-4769-9fb2-2a748749b2b2",
+    "Meta AI - Codellama 13b Python": API_HOST + f":{API_PORT}" + "/api/v1/prediction/d5cb84d9-9bf0-449a-a1ba-c916877f472c",
+    "Meta AI - Codellama 7b Instruct": API_HOST + f":{API_PORT}" + "/api/v1/prediction/a5a3b276-5e13-4789-9fce-b9cc64d10401",
+    "Meta AI - Codellama 7b Python": API_HOST + f":{API_PORT}" + "/api/v1/prediction/5f50d315-1d0f-425c-8776-62bf0a06fad6",
+    "OpenAI GPT-3.5-Turbo Instruct": API_HOST + f":{API_PORT}" + "/api/v1/prediction/b8cf4ce2-2227-4673-87d9-acbee4fcd8da",
+    "OpenAI davinci-002": API_HOST + f":{API_PORT}" + "/api/v1/prediction/15ec5490-09bf-4635-8a2e-6b40a3322daa",
 }
 
 #  Create a memory object and add it to the session state
