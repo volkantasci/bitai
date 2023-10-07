@@ -18,7 +18,7 @@ services:
     ports:
       - '${PORT}:${PORT}'
     volumes:
-      - ~/.flowise:/root/.flowise
+      - ~/.bitai_flowise:/root/.flowise
     command: /bin/sh -c "sleep 3; flowise start"
 
 
@@ -28,8 +28,7 @@ services:
     environment:
       - API_HOST=bitai-flowise
       - API_PORT=3000
-    volumes:
-      - '.env:/app/.env'
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
 
     ports:
       - '8501:8501'
