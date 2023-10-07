@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  bitai-flowise:
+    image: volkantasci/bitai-flowise:latest
+    restart: always
+    environment:
+      - PORT=${PORT}
+      - FLOWISE_USERNAME=${FLOWISE_USERNAME}
+      - FLOWISE_PASSWORD=${FLOWISE_PASSWORD}
+      - DEBUG=${DEBUG}
+      - DATABASE_PATH=${DATABASE_PATH}
+      - APIKEY_PATH=${APIKEY_PATH}
+      - SECRETKEY_PATH=${SECRETKEY_PATH}
+      - FLOWISE_SECRETKEY_OVERWRITE=${FLOWISE_SECRETKEY_OVERWRITE}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_PATH=${LOG_PATH}
+    ports:
+      - '${PORT}:${PORT}'
+    volumes:
+      - ~/.flowise:/root/.flowise
+    command: /bin/sh -c "sleep 3; flowise start"
+
+
+  bitai-streamlit:
+    image: volkantasci/bitai-streamlit:latest
+    restart: always
+    environment:
+      - API_HOST=bitai-flowise
+
+    ports:
+      - '8501:8501'
