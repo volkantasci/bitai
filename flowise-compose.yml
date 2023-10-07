@@ -20,15 +20,3 @@ services:
     volumes:
       - ~/.bitai_flowise:/root/.flowise
     command: /bin/sh -c "sleep 3; flowise start"
-
-
-  bitai-streamlit:
-    image: volkantasci/bitai-streamlit:latest
-    restart: always
-    environment:
-      - API_HOST=bitai-flowise
-      - API_PORT=3000
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-
-    ports:
-      - '8501:8501'
