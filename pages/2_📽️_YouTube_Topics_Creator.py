@@ -75,7 +75,6 @@ def main():
     if prompt:
         handle_user_input(prompt)
 
-    st.sidebar.image("assests/bitpython-logo.png")
     st.sidebar.caption('<p style="text-align: center;">Made by volkantasci</p>', unsafe_allow_html=True)
 
     for message in st.session_state.youtube_memory.buffer_as_messages:

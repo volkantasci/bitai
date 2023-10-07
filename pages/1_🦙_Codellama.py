@@ -123,7 +123,6 @@ def main():
             else:
                 st.chat_message("AI", avatar="🦙").write(message.content)
 
-    st.sidebar.image("assests/bitpython-logo.png")
     st.sidebar.caption('<p style="text-align: center;">Made by volkantasci</p>', unsafe_allow_html=True)
 
 
