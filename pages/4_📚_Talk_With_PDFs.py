@@ -77,6 +77,7 @@ def handle_human_message(user_input):
     def translate(text):
         # Translate user input to English
         print("Translating to English...")
+        print("API key:", environ.get("OPENAI_API_KEY"))
         llm = ChatOpenAI(
             model_name="gpt-4",
             temperature=0.7,

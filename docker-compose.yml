@@ -25,7 +25,7 @@ services:
 
 
   bitai-streamlit:
-    image: volkantasci/bitai-streamlit:latest
+    image: test
     restart: always
     environment:
       - API_HOST=bitai-flowise
