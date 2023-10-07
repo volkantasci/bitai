@@ -15,8 +15,6 @@ services:
       - FLOWISE_SECRETKEY_OVERWRITE=${FLOWISE_SECRETKEY_OVERWRITE}
       - LOG_LEVEL=${LOG_LEVEL}
       - LOG_PATH=${LOG_PATH}
-    env_file:
-      - .env
     ports:
       - '${PORT}:${PORT}'
     volumes:
@@ -25,14 +23,13 @@ services:
 
 
   bitai-streamlit:
-    image: test
+    image: volkantasci/bitai-streamlit:latest
     restart: always
     environment:
       - API_HOST=bitai-flowise
-      - API_PORT=${PORT}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-    env_file:
-      - .env
+      - API_PORT=3000
+    volumes:
+      - '.env:/app/.env'
 
     ports:
       - '8501:8501'

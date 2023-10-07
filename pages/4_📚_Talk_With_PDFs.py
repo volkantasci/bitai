@@ -61,7 +61,6 @@ def get_conversation_chain(vector_store):
     llm = ChatOpenAI(
         model_name="gpt-3.5-turbo",
         temperature=0.7,
-        openai_api_key=environ.get("OPENAI_API_KEY"),
     )
     memory = st.session_state.talk_with_pdfs_memory
     chain = ConversationalRetrievalChain.from_llm(
@@ -77,7 +76,6 @@ def handle_human_message(user_input):
     def translate(text):
         # Translate user input to English
         print("Translating to English...")
-        print("API key:", environ.get("OPENAI_API_KEY"))
         llm = ChatOpenAI(
             model_name="gpt-4",
             temperature=0.7,
