@@ -84,7 +84,7 @@ def read_pdfs(uploaded_files):
 def get_chunks(text):
     splitter = CharacterTextSplitter(
         separator="\n",
-        chunk_size=2048,
+        chunk_size=3500,
         chunk_overlap=300,
         length_function=len
     )
@@ -165,6 +165,7 @@ def main():
                 clear_button = st.button("🗑️ Clear history", use_container_width=True)
                 if clear_button:
                     st.session_state.summarize_interface_memory.clear()
+                    st.session_state.summarize_interface_summarized_text = ""
 
             with second_col2:
                 st.session_state.summarize_interface_html = st.toggle("HTML", value=False)
