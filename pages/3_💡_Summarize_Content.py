@@ -171,8 +171,7 @@ def main():
 
     prompt = st.chat_input("✏️ Enter your content here you want to summarize for: ")
     if prompt:
-        with st.spinner("Summarizing your content..."):
-            handle_user_input(prompt)
+        handle_user_input(prompt)
 
     st.sidebar.caption('<p style="text-align: center;">Made by volkantasci</p>', unsafe_allow_html=True)
 
