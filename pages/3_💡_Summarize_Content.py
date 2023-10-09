@@ -1,6 +1,8 @@
 import uuid
 from reportlab.platypus import SimpleDocTemplate, Paragraph
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 import streamlit as st
 import requests
 from langchain.memory import ConversationBufferMemory
@@ -35,11 +37,11 @@ if "summarize_model" not in st.session_state:
 if "summarize_interface_html" not in st.session_state:
     st.session_state.summarize_interface_html = False
 
-if "summarized_text" not in st.session_state:
-    st.session_state.summarized_text = ""
-
 if "summarized_pdf_file" not in st.session_state:
-    st.session_state.summarized_pdf_file = None
+    st.session_state.summarized_pdf_file = str
+
+if "summarize_interface_summarized_text" not in st.session_state:
+    st.session_state.summarize_interface_summarized_text = ""
 
 
 # write a new pdf file using st.session_state.summarized_text
@@ -53,8 +55,19 @@ def write_pdf(text):
     content = []
 
     style = getSampleStyleSheet()
-    paragraph = Paragraph(text, style['BodyText'])
-    content.append(paragraph)
+    pdfmetrics.registerFont(TTFont('Arial', 'download/arial.ttf'))
+
+    # Check if 'BodyText' style already exists
+    if 'BodyText' not in style:
+        style.add(ParagraphStyle(name='BodyText', fontName='Arial', fontSize=12, leading=12))
+
+    else:
+        style['BodyText'].fontName = 'Arial'
+        style['BodyText'].fontSize = 11
+        style['BodyText'].leading = 16
+
+    for line in text.split("\n"):
+        content.append(Paragraph(line, style['BodyText']))
 
     pdf.build(content)
 
@@ -84,6 +97,7 @@ def handle_user_input(prompt):
 
     def query(payload):
         selected_api_url = API_URLS[st.session_state.summarize_model]
+        print("Running query on API: ", selected_api_url)
         response = requests.post(selected_api_url, json=payload)
         return response.json()
 
@@ -93,7 +107,7 @@ def handle_user_input(prompt):
         })
 
         st.session_state.summarize_interface_memory.chat_memory.add_ai_message(output)
-        st.session_state.summarized_text += output + "\n"
+        st.session_state.summarize_interface_summarized_text += output + "\n"
 
 
 def handle_file_input(uploaded_file):
@@ -106,13 +120,10 @@ def handle_file_input(uploaded_file):
         handle_user_input(chunk)
 
     #  Write the summarized text to a new pdf file
-    write_pdf(st.session_state.summarized_text)
+    write_pdf(st.session_state.summarize_interface_summarized_text)
 
 
 def main():
-    st.session_state.user_input = None
-    st.session_state.summarized_text = None
-
     #  Add title and subtitle
     st.title(":orange[bit AI] 🤖")
     st.caption(
@@ -128,13 +139,18 @@ def main():
         if upload_button:
             handle_file_input(upload_file)
 
-        download_button = st.button("Download Summarized PDF", disabled=not st.session_state.summarized_text)
+        download_button = st.button("Download Summarized PDF",
+                                    disabled=not st.session_state.summarize_interface_summarized_text)
         if download_button:
-            st.download_button(
-                label="Download Summarized PDF",
-                file_name=st.session_state.summarized_pdf_file,
-                mime="application/pdf",
-            )
+            write_pdf(st.session_state.summarize_interface_summarized_text)
+            with open(st.session_state.summarized_pdf_file, "rb") as pdf_file:
+                b64 = pdf_file.read()
+                st.download_button(
+                    label="Download Summarized PDF",
+                    data=b64,
+                    file_name="summarized.pdf",
+                    mime="application/pdf",
+                )
 
     with st.container():
         col1, col2 = st.columns(2)
@@ -155,7 +171,8 @@ def main():
 
     prompt = st.chat_input("✏️ Enter your content here you want to summarize for: ")
     if prompt:
-        handle_user_input(prompt)
+        with st.spinner("Summarizing your content..."):
+            handle_user_input(prompt)
 
     st.sidebar.caption('<p style="text-align: center;">Made by volkantasci</p>', unsafe_allow_html=True)
 

@@ -3,3 +3,5 @@ venv
 *.py[cod]
 __pycache__
 .DS_Store
+*.sqlite3
+static/*

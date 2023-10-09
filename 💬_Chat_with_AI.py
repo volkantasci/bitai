@@ -41,7 +41,6 @@ def handle_user_input(prompt):
     st.session_state.chat_interface_memory.chat_memory.add_user_message(prompt)
 
     def query(payload):
-        print(payload)
         response = requests.post(API_URLS[st.session_state.chat_model], json=payload)
         return response.json()
 
