@@ -1,12 +1,19 @@
+import pdf2image
 import streamlit as st
 from langchain.embeddings import HuggingFaceInstructEmbeddings
-from PyPDF2 import PdfReader
 from langchain.vectorstores import FAISS
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.schema.messages import HumanMessage, AIMessage, SystemMessage
 from langchain.chat_models import ChatOpenAI
+
+try:
+    from PIL import Image
+except ImportError:
+    import Image
+
+import pytesseract
 
 if "conversational_retriever_chain" not in st.session_state:
     st.session_state.conversational_retriever_chain = None
@@ -24,12 +31,11 @@ if "talk_with_pdfs_files" not in st.session_state:
     st.session_state.talk_with_pdfs_files = None
 
 
-def read_pdfs(files):
+def read_pdfs(uploaded_files):
     text = ""
-    for file in files:
-        pdf_reader = PdfReader(file)
-        for page in pdf_reader.pages:
-            text += page.extract_text()
+    for uploaded_file in uploaded_files:
+        for page in pdf2image.convert_from_bytes(uploaded_file.read()):
+            text += pytesseract.image_to_string(page)
 
     return text
 
@@ -126,7 +132,7 @@ def main():
         st.session_state.talk_with_pdfs_files = st.file_uploader(
             label="Upload PDFs",
             type=["pdf"],
-            accept_multiple_files=True,
+            accept_multiple_files=True
         )
         upload_button = st.button("Upload PDFs", disabled=not st.session_state.talk_with_pdfs_files)
         if upload_button:
