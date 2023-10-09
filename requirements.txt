@@ -12,4 +12,5 @@ huggingface-hub
 faiss-cpu
 pillow~=10.0.1
 pytesseract~=0.3.10
-pdf2image
+pdf2image~=1.16.3
+reportlab~=4.0.5

@@ -1,12 +1,25 @@
+import uuid
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
 import streamlit as st
 import requests
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import HumanMessage, AIMessage
+import pdf2image
+from langchain.text_splitter import CharacterTextSplitter
+
 from api_config import API_HOST, API_PORT
 from respond_beauty import make_it_beautiful
 
+try:
+    from PIL import Image
+except ImportError:
+    import Image
+
+import pytesseract
+
 API_URLS = {
-    "ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/bce8e1fd-cb78-4068-9822-d386d914068a"
+    "ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/d07a0402-57bc-4111-b34d-441f4c513765"
 }
 
 MODELS = [
@@ -21,6 +34,49 @@ if "summarize_model" not in st.session_state:
 
 if "summarize_interface_html" not in st.session_state:
     st.session_state.summarize_interface_html = False
+
+if "summarized_text" not in st.session_state:
+    st.session_state.summarized_text = ""
+
+if "summarized_pdf_file" not in st.session_state:
+    st.session_state.summarized_pdf_file = None
+
+
+# write a new pdf file using st.session_state.summarized_text
+# and return the file path
+
+def write_pdf(text):
+    new_file_name = "static/" + str(uuid.uuid4()) + ".pdf"
+    st.session_state.summarized_pdf_file = new_file_name
+    pdf = SimpleDocTemplate(new_file_name)
+
+    content = []
+
+    style = getSampleStyleSheet()
+    paragraph = Paragraph(text, style['BodyText'])
+    content.append(paragraph)
+
+    pdf.build(content)
+
+
+def read_pdfs(uploaded_files):
+    text = ""
+    for uploaded_file in uploaded_files:
+        for page in pdf2image.convert_from_bytes(uploaded_file.read()):
+            text += pytesseract.image_to_string(page)
+
+    return text
+
+
+def get_chunks(text):
+    splitter = CharacterTextSplitter(
+        separator="\n",
+        chunk_size=2048,
+        chunk_overlap=300,
+        length_function=len
+    )
+    chunks = splitter.split_text(text)
+    return chunks
 
 
 def handle_user_input(prompt):
@@ -37,6 +93,20 @@ def handle_user_input(prompt):
         })
 
         st.session_state.summarize_interface_memory.chat_memory.add_ai_message(output)
+        st.session_state.summarized_text += output + "\n"
+
+
+def handle_file_input(uploaded_file):
+    with st.spinner("Reading your PDF..."):
+        text = read_pdfs(uploaded_file)
+        chunks = get_chunks(text)
+
+    #  Summarize each chunk and add it to the memory
+    for chunk in chunks:
+        handle_user_input(chunk)
+
+    #  Write the summarized text to a new pdf file
+    write_pdf(st.session_state.summarized_text)
 
 
 def main():
@@ -51,6 +121,20 @@ def main():
     )
 
     st.subheader("Summarize Your Content With AI")
+
+    with st.sidebar:
+        upload_file = st.file_uploader("Upload a file to summarize", type=["pdf"], accept_multiple_files=True)
+        upload_button = st.button("Summarize PDF", disabled=not upload_file)
+        if upload_button:
+            handle_file_input(upload_file)
+
+        download_button = st.button("Download Summarized PDF", disabled=not st.session_state.summarized_text)
+        if download_button:
+            st.download_button(
+                label="Download Summarized PDF",
+                file_name=st.session_state.summarized_pdf_file,
+                mime="application/pdf",
+            )
 
     with st.container():
         col1, col2 = st.columns(2)
