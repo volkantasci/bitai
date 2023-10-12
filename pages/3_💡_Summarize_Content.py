@@ -84,11 +84,12 @@ def read_pdfs(uploaded_files):
 def get_chunks(text):
     splitter = CharacterTextSplitter(
         separator="\n",
-        chunk_size=3500,
+        chunk_size=3000,
         chunk_overlap=300,
         length_function=len
     )
     chunks = splitter.split_text(text)
+    print("Count of chunks: ", len(chunks))
     return chunks
 
 
@@ -116,7 +117,8 @@ def handle_file_input(uploaded_file):
         chunks = get_chunks(text)
 
     #  Summarize each chunk and add it to the memory
-    for chunk in chunks:
+    for i, chunk in enumerate(chunks):
+        print("Summarizing chunk: ", i)
         handle_user_input(chunk)
 
     #  Write the summarized text to a new pdf file
