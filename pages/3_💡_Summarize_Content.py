@@ -21,7 +21,7 @@ except ImportError:
 import pytesseract
 
 API_URLS = {
-    "ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/d07a0402-57bc-4111-b34d-441f4c513765"
+    "ChatGPT-4": API_HOST + f":{API_PORT}" + "/api/v1/prediction/bce8e1fd-cb78-4068-9822-d386d914068a"
 }
 
 MODELS = [
